@@ -61,5 +61,9 @@ def redirect_to_url(short_code: str):
 
 
 
+## uvicorn main:app --reload
+
+
+
 
 
