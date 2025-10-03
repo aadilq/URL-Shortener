@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, HttpUrl
 import string
 import random
@@ -13,8 +13,8 @@ class URL_Request(BaseModel):
 
 ## Response Model - Defines what we want to send back to the user
 class URL_Response(BaseModel):
-    original_url: str
     short_code: str
+    original_url: str
     shorten_url: str
 
 def generate_short_code(length=6):
@@ -45,6 +45,19 @@ def shorten_url(request: URL_Request):
         "short_url" : f"http://localhost:8000/{short_code}"
     }
 
+## Getting the short code and redirecting it the original URL
+@app.get("/{short_code}") 
+def redirect_to_url(short_code: str):
+    if short_code not in url_database:
+        raise HTTPException(status_code=404, detail="Short URL not found")
+    
+    original_url = url_database(short_code)
+
+    return{
+        "short_code" : short_code, 
+        "original_url" : original_url, 
+        "message": "Redirecting to this URL"
+    }
 
 
 
