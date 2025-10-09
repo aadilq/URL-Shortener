@@ -22,3 +22,6 @@ Right now, I have just set up the two basic API endpoints using FastAPI for:
  
 <img width="1278" height="494" alt="Screenshot 2025-10-03 at 12 42 43 PM" src="https://github.com/user-attachments/assets/cb1ace10-b837-499f-8bfc-c7ccb962a185" />
 
+
+## Status Update 1
+For the second part of the project, I am working on implementing a PostGRES database as the primary database for the URL-Shortener. The first step in creating our url-shortener database was making the database within postgres and it started off by making sure that I already had postGRES installed on my machine, which I confirmed when running 'psql --version'. I then connected into the postgres system as the postgres superuser. The last step was creating the database 'url_shortener' with the dedicated user 'url-user'. 
