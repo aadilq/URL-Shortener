@@ -23,5 +23,22 @@ Right now, I have just set up the two basic API endpoints using FastAPI for:
 <img width="1278" height="494" alt="Screenshot 2025-10-03 at 12 42 43 PM" src="https://github.com/user-attachments/assets/cb1ace10-b837-499f-8bfc-c7ccb962a185" />
 
 
-## Status Update 1
+## Status Update 2
 For the second part of the project, I am working on implementing a PostGRES database as the primary database for the URL-Shortener. The first step in creating our url-shortener database was making the database within postgres and it started off by making sure that I already had postGRES installed on my machine, which I confirmed when running 'psql --version'. I then connected into the postgres system as the postgres superuser. The last step was creating the database 'url_shortener' with the dedicated user 'url-user'. 
+
+
+
+## Status Update 3 
+After creating the 'url_shortener' database, it was time to connect it to our main url-shortener application. The first step was creating the connection string with our database credentials and adding it our dotenv file. With the help of GenAI tools such as Claude, I was able to load the database environmental variable from our dotenv file and store it as a variable. 
+
+-  Next up, I also used Claude as a guiding tool to help me connect the our database to the main application. I had to create a database engine which establishes connectivity to our PostgreSQL database engine. This function returns an engine instance which acts as the central communication of our database. 
+
+`database_engine = create_engine(DATABASE_URL)`
+
+
+
+- After establishing connectivity from our application to the postgresSQL database, Claude recommended to create a sessionLocal class which is a factory for creating database sessions. Each instance is a database session
+
+`Sessionlocal = sessionmaker(autocommit=False, autoflush=False, bind=database_engine)`
+
+
