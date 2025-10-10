@@ -1,6 +1,6 @@
 # URL-Shortener
 
-Currently in Production of building a URL-Shortener using FastAPI, Docker, Redis, and PostgreSQL.
+Currently in Production of building a URL-Shortener using Python,FastAPI, React, Docker, Redis, and PostgreSQL.
 
 ## Status Update 1
 
@@ -41,4 +41,26 @@ After creating the 'url_shortener' database, it was time to connect it to our ma
 
 `Sessionlocal = sessionmaker(autocommit=False, autoflush=False, bind=database_engine)`
 
+
+## Status Update 4
+
+Defined the table structure of our `url-shortener` database in the `models.py` file. Before talking about the `models.py` file, let's go back to the `database.py` where we had written a line of code which was essential for creating our table and it was...
+
+
+`Base = declarative_base()`
+
+- This line of code allows us to use the declarative style in order to define our database models as Python classes, which is really convenient. 
+
+In `models.py`, we defined the structure of our `urls` table in which the columns are as define: 
+
+
+`id` - Primary key which will auto increment e.g.(1, 2, 3,...)
+
+`short_code` - The shortened code e.g.(dnIqbT)
+
+`original_url` - The original url that we're shortening 
+
+`created_at` - automatic timestamp when the shortened url was created
+
+`click_count` - Tracks how many times the short url has been clicked
 
