@@ -51,16 +51,39 @@ Defined the table structure of our `url-shortener` database in the `models.py` f
 
 - This line of code allows us to use the declarative style in order to define our database models as Python classes, which is really convenient. 
 
-In `models.py`, we defined the structure of our `urls` table in which the columns are as define: 
+In `models.py`, we defined the structure of our `url-shortener` table in which the columns are as define: 
 
 
-`id` - Primary key which will auto increment e.g.(1, 2, 3,...)
+`id` -> Primary key which will auto increment e.g.(1, 2, 3,...)
 
-`short_code` - The shortened code e.g.(dnIqbT)
+`short_code` -> The shortened code e.g.(dnIqbT)
 
-`original_url` - The original url that we're shortening 
+`original_url` -> The original url that we're shortening 
 
-`created_at` - automatic timestamp when the shortened url was created
+`created_at` -> automatic timestamp when the shortened url was created
 
-`click_count` - Tracks how many times the short url has been clicked
+`click_count` -> Tracks how many times the short url has been clicked
+
+## Status Update 5
+Replace our in-memory database of a python dictionary with the postgreSQL database. In the `shorten_url` function of our POST request, with the help of Claude, I added a dependency injection that FastAPI offers which calls the `get_db()`, gets a database session and passes it to the function to the db parameter. Once the function finishes, the session is closed. 
+
+`db: Session = Depends(get_db)`
+
+
+We then query our database for records from the URL model to make sure if our short code is unique. 
+
+
+`    while(db.query(models.URL).filter(models.URL.short_code == short_code)).first():
+         short_code = generate_short_code()`
+
+let's break it down, 
+
+- `db.query(models.URL)` -> query the url-shortener table in `models.py`. `models.URL` refers to the URL python class that we made in `models.py`, and this stores our url-shortener table. 
+
+- .filter(models.URL.short_code == short_code) -> checks if the any of the short codes in our database matches the short code that we just generated. 
+
+- .first() -> returns the first instance of the short code if it does appear in our database. 
+
+
+After that, we created a new 
 

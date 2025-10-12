@@ -1,7 +1,15 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends
+from fastapi.responses import RedirectResponse
 from pydantic import BaseModel, HttpUrl
+from sqlalchemy.orm import Session
 import string
 import random
+
+from database import database_engine, Base, get_db
+import models
+
+# Create all tables
+Base.metadata.create_all(bind=database_engine)
 
 app = FastAPI()
 
@@ -30,11 +38,20 @@ async def root():
 
 
 @app.post("/api/shorten_url", response_model=URL_Response)
-def shorten_url(request: URL_Request):
+def shorten_url(request: URL_Request, db: Session = Depends(get_db)):
     short_code = generate_short_code()
 
-    while short_code in url_database:
+    while(db.query(models.URL).filter(models.URL.short_code == short_code)).first():
         short_code = generate_short_code()
+    
+    db_url = models.URL(
+        short_code = short_code, 
+        original_url = str(request.url),
+        click_count = 0
+    )
+
+    db.add(db_url)
+    db.commit()
     
 
     url_database[short_code] = str(request.url)
@@ -60,8 +77,14 @@ def redirect_to_url(short_code: str):
     }
 
 
+## Activating the virtual environment 
+# - source .venv/bin/activate
 
-## uvicorn main:app --reload
+
+## Starting (or restarting) the FastAPI server 
+# - uvicorn main:app --reload 
+
+ 
 
 
 
