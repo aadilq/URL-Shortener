@@ -4,7 +4,7 @@ from database import Base
 
 
 class URL(Base):
-    __tablename__ = 'url-shortener'
+    __tablename__ = 'urls'
 
 
     ##Primary Key - Auto-incrementing ID (1, 2, 3)
@@ -22,4 +22,3 @@ class URL(Base):
     ## Click counter to count how many times the url has been clicked
     click_count = Column(Integer, default=0)
 
-    

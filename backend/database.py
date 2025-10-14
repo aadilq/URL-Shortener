@@ -20,12 +20,5 @@ Sessionlocal = sessionmaker(autocommit=False, autoflush=False, bind=database_eng
 
 Base = declarative_base()
 
-def get_db():
-    db = Sessionlocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
 
 

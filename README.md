@@ -85,5 +85,14 @@ let's break it down,
 - .first() -> returns the first instance of the short code if it does appear in our database. 
 
 
-After that, we created a new 
+After we check that our shorted code does not exist in our, we create a new object that comforms to the url model that we defined in `models.py` and save it to our database. 
 
+`    db_url = models.URL(
+        short_code = short_code, 
+        original_url = str(request.url),
+        click_count = 0
+    )`
+
+
+## Status Update 6 
+I added another GET endpoint to the FastAPI backend in order to get the statistics for each shortened url for analytics. In this GET endpoint, we taken in the shortened code that we made for the URL, find it within our database, and return the short code, the original url, how many times this shortened_url has been clicked, and what date/time that the shortened url was created at. I also tweaked the way in which I was accessing my database. Instead of relying on FastAPI dependency injection, I changed it up and went with the manual way of creating a database session using try and finally blocks. 
