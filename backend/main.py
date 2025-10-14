@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 from pydantic import BaseModel, HttpUrl
 from sqlalchemy.orm import Session
@@ -13,8 +14,17 @@ Base.metadata.create_all(bind=database_engine)
 
 app = FastAPI()
 
-url_database = {}
+origins = [
+    "http://localhost:5173"
+]
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 ## Request Model - Defines what type of data we expect from the user
 class URL_Request(BaseModel):
     url: HttpUrl ## pydantic HttpUrl allows us to validate if the url is a proper url
