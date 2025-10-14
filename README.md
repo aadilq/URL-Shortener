@@ -96,3 +96,7 @@ After we check that our shorted code does not exist in our, we create a new obje
 
 ## Status Update 6 
 I added another GET endpoint to the FastAPI backend in order to get the statistics for each shortened url for analytics. In this GET endpoint, we taken in the shortened code that we made for the URL, find it within our database, and return the short code, the original url, how many times this shortened_url has been clicked, and what date/time that the shortened url was created at. I also tweaked the way in which I was accessing my database. Instead of relying on FastAPI dependency injection, I changed it up and went with the manual way of creating a database session using try and finally blocks. 
+
+
+## Status Update 7 
+I transitioned into the frontend of my application, focusing on what the user is going to see. First, we had to resolve CORS issue since our frontend and backend were running on two different ports. In my main.py file, I allowed cors access to the the port in which the frontend react is living in so that the data can be transferred back and forth. I then worked on building the UrlShortener.jsx component for our application, which consists of a function called handlesubmit in order use our POST request and create the shortened url in our FastAPI backend. 
