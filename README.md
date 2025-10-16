@@ -100,3 +100,6 @@ I added another GET endpoint to the FastAPI backend in order to get the statisti
 
 ## Status Update 7 
 I transitioned into the frontend of my application, focusing on what the user is going to see. First, we had to resolve CORS issue since our frontend and backend were running on two different ports. In my main.py file, I allowed cors access to the the port in which the frontend react is living in so that the data can be transferred back and forth. I then worked on building the UrlShortener.jsx component for our application, which consists of a function called handlesubmit in order use our POST request and create the shortened url in our FastAPI backend. 
+
+## Status Update 8
+Worked on using Docker to containerize our application. First, I had to create two separate Docker files for both the backend and frontend of the url shortener, which I then had claude help me out on what commands are needed to create our images. 
