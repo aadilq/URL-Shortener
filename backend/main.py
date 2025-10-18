@@ -15,7 +15,8 @@ Base.metadata.create_all(bind=database_engine)
 app = FastAPI()
 
 origins = [
-    "http://localhost:5173"
+    "http://localhost",
+    "http://localhost:5173",
 ]
 
 app.add_middleware(
@@ -27,7 +28,7 @@ app.add_middleware(
 )
 ## Request Model - Defines what type of data we expect from the user
 class URL_Request(BaseModel):
-    url: HttpUrl ## pydantic HttpUrl allows us to validate if the url is a proper url
+    url: str ## pydantic HttpUrl allows us to validate if the url is a proper url
 
 ## Response Model - Defines what we want to send back to the user
 class URL_Response(BaseModel):
