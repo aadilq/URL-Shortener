@@ -8,6 +8,7 @@ import random
 
 from database import database_engine, Base, Sessionlocal
 import models
+from redis_client import get_cached_url, cache_url
 
 # Create all tables
 Base.metadata.create_all(bind=database_engine)
@@ -81,6 +82,11 @@ def shorten_url(request: URL_Request):
 ## Getting the short code and redirecting it the original URL
 @app.get("/{short_code}") 
 def redirect_to_url(short_code: str):
+    
+    cached_url = get_cached_url(short_code)
+
+    if cached_url:
+        return RedirectResponse(url=cached_url)
 
     db = Sessionlocal()
 
@@ -89,6 +95,8 @@ def redirect_to_url(short_code: str):
 
         if not url_entry:
             raise HTTPException(status_code=404, detail="Short URL not found")
+        
+        cache_url(short_code, url_entry.original_url)
     
         url_entry.click_count += 1
         db.commit()

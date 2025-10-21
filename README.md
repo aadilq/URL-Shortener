@@ -109,3 +109,7 @@ Finished on dockerizing the url-shortener. I've never worked with docker all at 
 
 # Status Update 10
 Got around to start implementing Redis as a caching service in our url-shortener. Right now the way that our application works is that our user clicks on the short url, which then allows our backend to query postgresql, gets the original url, and redirects the user. Now, with the Redis implemented, the user clicks on the short url, checks our Redis Cache and if its not cached yet, query postgresql, and then Store in the Redis cache for 24 hours. Now when the user clicks on the same link within the next 24 hours, the link will be pulled from our Redis cache. 
+
+
+## Status Update 11
+Finished implementing the Redis caching in our url-shortener. The first part of the implementation actually dealt with the Docker aspect of it which meant adding it our `requirements.txt` file so that it could be read in our backend container. Then we added it to our docker-compose.yml file as its own service. We also made a tweak to our backend container and added redis as a dependency because technically our backend relies on redis to recieve data. Next up was creating our redis_client.py file in which we defined two functions, `get_cached_url` and `cache_url`, both of which deal directly with retrieving the original link from the cache and adding it to the cache if it was not already there. 
