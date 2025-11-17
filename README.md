@@ -1,6 +1,6 @@
 # URL-Shortener
 
-Currently in Production of building a URL-Shortener using Python,FastAPI, React, Docker, Redis, and PostgreSQL.
+Built a URL-Shortener using Python,FastAPI, React, Docker, Redis, and PostgreSQL. Takes in a long url and outputs a short url that redirects to the same long url.
 
 ## Status Update 1
 
